@@ -7,7 +7,7 @@ services:
     env_file:
       - ./mysql/mysql.env
     networks:
-      skynet
+      - skynet
     volumes:
       - "sitesdb:/var/lib/mysql"
       - "./mysql/bx_mysql.cnf:/etc/mysql/conf.d/bx_mysql.cnf"
@@ -18,7 +18,7 @@ services:
     ports:
       - 8080:80
     networks:
-      skynet
+      - skynet
     volumes:
       - "./myadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php"
       - "./myadmin/config.inc.php:/etc/phpmyadmin/config.inc.php"
@@ -29,7 +29,7 @@ services:
     ports:
       - 9000:9000
     networks:
-      skynet
+      - skynet
     volumes:
       - "portainer:/data"
       - "/var/run/docker.sock:/var/run/docker.sock"
