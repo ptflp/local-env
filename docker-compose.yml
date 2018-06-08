@@ -1,0 +1,46 @@
+version: "2"
+services:
+  sitesdb:
+    image: mariadb
+    container_name: sitesdb
+    restart: always
+    env_file:
+      - ./mysql/mysql.env
+    networks:
+      skynet
+    volumes:
+      - "sitesdb:/var/lib/mysql"
+      - "./mysql/bx_mysql.cnf:/etc/mysql/conf.d/bx_mysql.cnf"
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    ports:
+      - 8080:80
+    networks:
+      skynet
+    volumes:
+      - "./myadmin/config.user.inc.php:/etc/phpmyadmin/config.user.inc.php"
+      - "./myadmin/config.inc.php:/etc/phpmyadmin/config.inc.php"
+  portainer:
+    image: portainer/portainer
+    container_name: portainer
+    restart: always
+    ports:
+      - 9000:9000
+    networks:
+      skynet
+    volumes:
+      - "portainer:/data"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+networks:
+  skynet:
+    external:
+      name: skynet
+volumes:
+  portainer:
+    external:
+      name: portainer
+  sitesdb:
+    external:
+      name: sitesdb
